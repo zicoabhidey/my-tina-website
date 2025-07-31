@@ -7,10 +7,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Adding a comment to trigger a new build -->
-    <h1 data-tina-field="heading">Hello, World!</h1>
+    <h1 id="heading">Loading...</h1>
+
     <script>
-      // We will add a script here later to fetch content from TinaCMS
+      async function fetchContent() {
+        try {
+          // This fetches the content file we will create.
+          const response = await fetch('./content/page.json');
+          if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+          }
+          const data = await response.json();
+          document.getElementById('heading').textContent = data.heading;
+        } catch (error) {
+          console.error('Failed to fetch content:', error);
+          document.getElementById('heading').textContent = 'Error loading content';
+        }
+      }
+
+      fetchContent();
     </script>
 </body>
-</html>

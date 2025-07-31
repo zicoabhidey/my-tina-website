@@ -1,7 +1,7 @@
 import { defineConfig } from "tinacms";
 
 export default defineConfig({
-  branch: "main", // or your default branch
+  branch: "main",
   clientId: process.env.TINA_CLIENT_ID!,
   token: process.env.TINA_TOKEN!,
   build: {
@@ -10,7 +10,7 @@ export default defineConfig({
   },
   media: {
     tina: {
-      mediaRoot: "",
+      mediaRoot: "media",
       publicFolder: "./",
     },
   },
@@ -19,18 +19,19 @@ export default defineConfig({
       {
         name: "page",
         label: "Page",
-        path: "",
+        path: "content", // Points to the 'content' folder
         format: "json",
         fields: [
           {
             type: "string",
             name: "heading",
             label: "Heading",
+            isTitle: true,
+            required: true,
           },
         ],
-        // This is a single page, so we will have a single document
-        // that is always loaded.
         ui: {
+          // Don't allow creating new files in this collection
           allowedActions: {
             create: false,
             delete: false,
